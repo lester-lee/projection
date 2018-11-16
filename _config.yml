@@ -1,0 +1,9 @@
+title: projection
+email: lester@lester-lee.com
+description: >-
+  Final project for ARTS340 - Infinite Scroll
+
+#Build settings
+markdown: kramdown
+permalink: pretty
+future: true
