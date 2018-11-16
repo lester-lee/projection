@@ -3,8 +3,8 @@
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: 320,
+  height: 320,
   parent: "GameContainer",
   pixelArt: true,
   physics: {
@@ -75,7 +75,7 @@ function create() {
     .setOffset(0, 24);
 
   this.physics.add.collider(player, worldLayer);
-console.log(tileset.tileProperties)
+
   // Create the player's walking animations from the texture atlas. These are stored in the global
   // animation manager so any sprite can access them.
   const anims = this.anims;
@@ -161,7 +161,7 @@ console.log(tileset.tileProperties)
 
 function update(time, delta) {
   // Runs once per frame for the scene
-  const speed = 175;
+  const speed = 100;
   const prevVelocity = player.body.velocity.clone();
   controls = cursors;
 
