@@ -7,7 +7,9 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: {y:0}
+      gravity: {
+        y: 0
+      }
     }
   },
   scene: {
@@ -18,7 +20,8 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
-let controls;
+let cursors;
+let wasd;
 let player;
 let showDebug = false;
 
@@ -54,7 +57,7 @@ function create() {
   const aboveLayer = map.createStaticLayer("Above", tileset, 0, 0);
 
   worldLayer.setCollisionByProperty({
-    collides: true
+    collides: "true"
   });
   aboveLayer.setDepth(10);
 
@@ -69,7 +72,7 @@ function create() {
     .setOffset(0, 24);
 
   this.physics.add.collider(player, worldLayer);
-
+console.log(tileset.tileProperties)
   // Create the player's walking animations from the texture atlas. These are stored in the global
   // animation manager so any sprite can access them.
   const anims = this.anims;
@@ -126,38 +129,38 @@ function create() {
   camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
   // Create object for arrow keys
-  const cursors = this.input.keyboard.createCursorKeys();
+  cursors = this.input.keyboard.createCursorKeys();
   // Similarly for wasd
-  const wasd = {
-    up: XV.game.input.keyboard.addKey(Phaser.Keyboard.W),
-    down: XV.game.input.keyboard.addKey(Phaser.Keyboard.S),
-    left: XV.game.input.keyboard.addKey(Phaser.Keyboard.A),
-    right: XV.game.input.keyboard.addKey(Phaser.Keyboard.D),
-  };
+  wasd = this.input.keyboard.addKeys({
+    'up': Phaser.Input.Keyboard.KeyCodes.W,
+    'down': Phaser.Input.Keyboard.KeyCodes.S,
+    'left': Phaser.Input.Keyboard.KeyCodes.A,
+    'right': Phaser.Input.Keyboard.KeyCodes.D,
+  });
 
-   // Debug graphics
-   this.input.keyboard.once("keydown_D", event => {
-     // Turn on physics debugging to show player's hitbox
-     this.physics.world.createDebugGraphic();
+  // Debug graphics
+  this.input.keyboard.once("keydown_D", event => {
+    // Turn on physics debugging to show player's hitbox
+    this.physics.world.createDebugGraphic();
 
-     // Create worldLayer collision graphic above the player, but below the help text
-     const graphics = this.add
-       .graphics()
-       .setAlpha(0.75)
-       .setDepth(20);
-     worldLayer.renderDebug(graphics, {
-       tileColor: null, // Color of non-colliding tiles
-       collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-       faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-     });
-   });
+    // Create worldLayer collision graphic above the player, but below the help text
+    const graphics = this.add
+      .graphics()
+      .setAlpha(0.75)
+      .setDepth(20);
+    worldLayer.renderDebug(graphics, {
+      tileColor: null, // Color of non-colliding tiles
+      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+    });
+  });
 }
 
 function update(time, delta) {
   // Runs once per frame for the scene
   const speed = 175;
   const prevVelocity = player.body.velocity.clone();
-  controls = wasd;
+  controls = cursors;
 
   // Stop previous movement
   player.body.setVelocity(0);
