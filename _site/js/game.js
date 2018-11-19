@@ -1,9 +1,10 @@
 const config = {
   type: Phaser.AUTO,
-  width: 320,
-  height: 320,
+  width: 640,
+  height: 640,
   parent: "GameContainer",
   pixelArt: true,
+  forceSingleUpdate: true,
   physics: {
     default: "arcade",
     arcade: {
@@ -29,8 +30,8 @@ function preload() {
   // Runs once before game starts to load assets
 
   // Load tiles
-  this.load.image("test-tiles", "/assets/tilesets/test-tileset.png");
-  this.load.tilemapTiledJSON("test-map-1", "/assets/maps/test_1.json");
+  this.load.image("test-tiles", "/assets/tilesets/map_start.png");
+  this.load.tilemapTiledJSON("test-map-1", "/assets/maps/map--start.json");
 
   // An atlas is a way to pack multiple images together into one texture. I'm using it to load all
   // the player animations (walking left, walking right, etc.) in one image. For more info see:
@@ -49,7 +50,7 @@ function create() {
   });
 
   // Parameters: (Tiled tileset name, Phaser cache in preload)
-  const tileset = map.addTilesetImage("test-tileset", "test-tiles");
+  const tileset = map.addTilesetImage("map_start_tileset", "test-tiles");
 
   // Parameters: (Tiled layer name, tileset, x, y)
   const belowLayer = map.createStaticLayer("Below", tileset, 0, 0);
@@ -57,7 +58,7 @@ function create() {
   const aboveLayer = map.createStaticLayer("Above", tileset, 0, 0);
 
   worldLayer.setCollisionByProperty({
-    collides: "true"
+    collides: true
   });
   aboveLayer.setDepth(10);
 
@@ -72,7 +73,7 @@ function create() {
     .setOffset(0, 24);
 
   this.physics.add.collider(player, worldLayer);
-console.log(tileset.tileProperties)
+
   // Create the player's walking animations from the texture atlas. These are stored in the global
   // animation manager so any sprite can access them.
   const anims = this.anims;
@@ -158,7 +159,7 @@ console.log(tileset.tileProperties)
 
 function update(time, delta) {
   // Runs once per frame for the scene
-  const speed = 100;
+  const speed = 175;
   const prevVelocity = player.body.velocity.clone();
   controls = cursors;
 
