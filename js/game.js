@@ -33,21 +33,14 @@ function preload() {
   // Runs once before game starts to load assets
 
   // Load tiles
-  this.load.image("test-tiles", "{{site.baseurl}}/assets/tilesets/map_start.png");
-  this.load.tilemapTiledJSON("test-map-1", "{{site.baseurl}}/assets/maps/map--start.json");
+  this.load.image("test-tiles", "{{site.baseurl}}/assets/tilesets/projection_room.png");
+  this.load.tilemapTiledJSON("test-map-1", "{{site.baseurl}}/assets/maps/projection_room.json");
 
   // Load player sprite
   this.load.spritesheet('player',
     '{{site.baseurl}}/assets/sprites/player.png',
     { frameWidth: 32, frameHeight: 32}
     );
-
-  // An atlas is a way to pack multiple images together into one texture. I'm using it to load all
-  // the player animations (walking left, walking right, etc.) in one image. For more info see:
-  //  https://labs.phaser.io/view.html?src=src/animation/texture%20atlas%20animation.js
-  // If you don't use an atlas, you can do the same thing with a spritesheet, see:
-  //  https://labs.phaser.io/view.html?src=src/animation/single%20sprite%20sheet.js
-  this.load.atlas("atlas", "https://www.mikewesthad.com/phaser-3-tilemap-blog-posts/post-1/assets/atlas/atlas.png", "https://www.mikewesthad.com/phaser-3-tilemap-blog-posts/post-1/assets/atlas/atlas.json");
 }
 
 function create() {
@@ -59,7 +52,7 @@ function create() {
   });
 
   // Parameters: (Tiled tileset name, Phaser cache in preload)
-  const tileset = map.addTilesetImage("map_start_tileset", "test-tiles");
+  const tileset = map.addTilesetImage("projection_room_tileset", "test-tiles");
 
   // Parameters: (Tiled layer name, tileset, x, y)
   const belowLayer = map.createStaticLayer("Below", tileset, 0, 0);
