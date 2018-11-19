@@ -33,6 +33,12 @@ function preload() {
   this.load.image("test-tiles", "/assets/tilesets/map_start.png");
   this.load.tilemapTiledJSON("test-map-1", "/assets/maps/map--start.json");
 
+  // Load player sprite
+  this.load.spritesheet('player',
+    '/assets/sprites/player.png',
+    { frameWidth: 32, frameHeight: 32}
+    );
+
   // An atlas is a way to pack multiple images together into one texture. I'm using it to load all
   // the player animations (walking left, walking right, etc.) in one image. For more info see:
   //  https://labs.phaser.io/view.html?src=src/animation/texture%20atlas%20animation.js
@@ -68,15 +74,42 @@ function create() {
   // Create a sprite with physics enabled via the physics system. The image used for the sprite has
   // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
   player = this.physics.add
-    .sprite(spawnPoint.x, spawnPoint.y, "atlas", "misa-front")
-    .setSize(30, 40)
-    .setOffset(0, 24);
+    .sprite(spawnPoint.x, spawnPoint.y, "player");
 
   this.physics.add.collider(player, worldLayer);
 
   // Create the player's walking animations from the texture atlas. These are stored in the global
   // animation manager so any sprite can access them.
   const anims = this.anims;
+  anims.create({
+    key: 'down',
+    frames: anims.generateFrameNumbers('player',
+    { start: 0, end: 3}),
+    frameRate: 10,
+    repeat: -1
+  });
+  anims.create({
+    key: 'up',
+    frames: anims.generateFrameNumbers('player',
+      { start: 4, end: 7 }),
+    frameRate: 10,
+    repeat: -1
+  });
+  anims.create({
+    key: 'right',
+    frames: anims.generateFrameNumbers('player',
+      { start: 8, end: 11 }),
+    frameRate: 10,
+    repeat: -1
+  });
+  anims.create({
+    key: 'left',
+    frames: anims.generateFrameNumbers('player',
+      { start: 12, end: 15 }),
+    frameRate: 10,
+    repeat: -1
+  });
+  /*
   anims.create({
     key: "misa-left-walk",
     frames: anims.generateFrameNames("atlas", {
@@ -121,7 +154,7 @@ function create() {
     frameRate: 10,
     repeat: -1
   });
-
+  */
 
   // Set up camera
   const camera = this.cameras.main;
@@ -185,20 +218,14 @@ function update(time, delta) {
 
   // Update the animation last and give left/right animations precedence over up/down animations
   if (controls.left.isDown) {
-    player.anims.play("misa-left-walk", true);
+    player.anims.play("left", true);
   } else if (controls.right.isDown) {
-    player.anims.play("misa-right-walk", true);
+    player.anims.play("right", true);
   } else if (controls.up.isDown) {
-    player.anims.play("misa-back-walk", true);
+    player.anims.play("up", true);
   } else if (controls.down.isDown) {
-    player.anims.play("misa-front-walk", true);
+    player.anims.play("down", true);
   } else {
     player.anims.stop();
-
-    // If we were moving, pick and idle frame to use
-    if (prevVelocity.x < 0) player.setTexture("atlas", "misa-left");
-    else if (prevVelocity.x > 0) player.setTexture("atlas", "misa-right");
-    else if (prevVelocity.y < 0) player.setTexture("atlas", "misa-back");
-    else if (prevVelocity.y > 0) player.setTexture("atlas", "misa-front");
   }
 }
