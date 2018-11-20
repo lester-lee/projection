@@ -4,13 +4,18 @@ let player;
 let showDebug = false;
 let cursors;
 
-function createScene(tileset_url, map_json, Tiledset_name){
+function createScene(tileset_url, map_json, Tiledset_name, scene_name){
   return new Phaser.Class({
     Extends: Phaser.Scene,
+    initialize: function () {
+      Phaser.Scene.call(this, scene_name);
+      this.player;
+      this.cursors;
+    },
     preload: function () {
       // Load tiles
-      this.load.image("tiles", tileset_url);
-      this.load.tilemapTiledJSON("map", map_json);
+      this.load.image(scene_name+"tiles", tileset_url);
+      this.load.tilemapTiledJSON(scene_name + "map", map_json);
       // Load player sprite
       this.load.spritesheet('player',
         '{{site.baseurl}}/assets/sprites/player.png', {
@@ -24,11 +29,11 @@ function createScene(tileset_url, map_json, Tiledset_name){
 
       // Load map
       const map = this.make.tilemap({
-        key: "map"
+        key: scene_name + "map"
       });
 
       // Parameters: (Tiled tileset name, Phaser cache in preload)
-      const tileset = map.addTilesetImage(Tiledset_name, "tiles");
+      const tileset = map.addTilesetImage(Tiledset_name, scene_name + "tiles");
 
       // Parameters: (Tiled layer name, tileset, x, y)
       const belowLayer = map.createStaticLayer("Below", tileset, 0, 0);

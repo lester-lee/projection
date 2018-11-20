@@ -3,10 +3,13 @@
 var scene_start = createScene(
     "{{site.baseurl}}/assets/tilesets/map_start.png",
     "{{site.baseurl}}/assets/maps/map--start.json",
-    "map_start_tileset"
+    "map_start_tileset",
+    "scene_start"
     );
-scene_start.initialize = function scene_start() {
-    Phaser.Scene.call(this, "scene_start");
-    this.player;
-    this.cursors;
-};
+
+var scene_projector = createScene(
+    "{{site.baseurl}}/assets/tilesets/projection_room.png",
+    "{{site.baseurl}}/assets/maps/projection_room.json",
+    "projection_room_tileset",
+    "scene_projector"
+    );
