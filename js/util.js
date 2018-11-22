@@ -11,6 +11,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
       Phaser.Scene.call(this, scene_name);
       this.player;
       this.cursors;
+      this.interactKey;
     },
     preload: function () {
       // Load tiles
@@ -24,7 +25,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
         }
       );
     },
-    create: function create() {
+    create: function () {
       // Runs once, after preload finishes
 
       // Load map
@@ -119,6 +120,9 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
           faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         });
       });
+
+      // Set up interact key
+      this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
     },
     wake: function () {
       // idk what this does
@@ -126,7 +130,6 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
     update: function (time, delta) {
       // Runs once per frame for the scene
       const speed = 175;
-      const prevVelocity = player.body.velocity.clone();
       controls = cursors;
 
       // Stop previous movement
@@ -144,6 +147,11 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
         player.body.setVelocityY(-speed);
       } else if (controls.down.isDown) {
         player.body.setVelocityY(speed);
+      }
+
+      // Interaction
+      if (Phaser.Input.Keyboard.JustDown(this.interactKey)){
+        checkInteraction(player);
       }
 
       // Normalize and scale the velocity so that player can't move faster along a diagonal
