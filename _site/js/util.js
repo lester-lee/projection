@@ -1,15 +1,14 @@
 let player;
 let showDebug = false;
 let cursors;
+let interactKey;
 
 function createScene(tileset_url, map_json, Tiledset_name, scene_name){
   return new Phaser.Class({
     Extends: Phaser.Scene,
     initialize: function () {
       Phaser.Scene.call(this, scene_name);
-      this.player;
-      this.cursors;
-      this.interactKey;
+      this.objects;
     },
     preload: function () {
       // Load tiles
@@ -46,6 +45,9 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
 
       // Find "Spawn" object from Tiled
       const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn");
+
+      // Get objects from Tiled
+      this.objects = map.objects[0].objects;
 
       // Create a sprite with physics enabled via the physics system. The image used for the sprite has
       // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
@@ -120,7 +122,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
       });
 
       // Set up interact key
-      this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
+      interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
     },
     wake: function () {
       // idk what this does
@@ -148,7 +150,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
       }
 
       // Interaction
-      if (Phaser.Input.Keyboard.JustDown(this.interactKey)){
+      if (Phaser.Input.Keyboard.JustDown(interactKey)){
         checkInteraction(player);
       }
 
@@ -167,6 +169,29 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
       } else {
         player.anims.stop();
       }
+    },
+    getObject: function(playerDir) {
+      let olength = this.objects.length;
+      let odx;
+      let cur_obj;
+      let x_range, y_range = [], [];
+      /*
+      switch (playerDir){
+        case "up":
+          x_range += 
+      }
+      for (odx = 0; odx < olength; o++){
+        cur_obj = this.objects[odx];
+        
+      }
+      */
+     let pTile = this.map.getTileAtWorldXY(player.x, player.y);
+     console.log(pTile);
+    },
+    checkInteraction: function(){
+      let playerDir = player.anims.currentAnim.key;
+      console.log(playerDir);
+      obj = getObject(playerDir);
     }
   });
 }
