@@ -1,7 +1,12 @@
+let width = 640;
+let height = 640;
+
+document.getElementById("DialogueBox").style.width = width + "px";
+
 const config = {
   type: Phaser.AUTO,
-  width: 640,
-  height: 640,
+  width: width,
+  height: height,
   parent: "GameContainer",
   pixelArt: true,
   forceSingleUpdate: true,

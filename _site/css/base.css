@@ -11,9 +11,16 @@ body {
   height: 100vh;
   background: black;
   display: flex;
+  flex-flow: column;
   justify-content: center;
   align-items: center; }
 
 /* Game Container */
 #GameContainer {
   background: black; }
+
+#DialogueBox {
+  font-family: 'VT323', monospace;
+  color: white;
+  height: 100px;
+  font-size: 22px; }
