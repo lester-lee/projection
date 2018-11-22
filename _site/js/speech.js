@@ -20,7 +20,7 @@ function ageSpeech(){
 
   // dump messages over limit
   var aLen = archivedMessages.length;
-  while (aLen > archivedMessageLimit) {
+  while (aLen > archiveLimit) {
     archivedMessages.pop();
     aLen--;
   }
@@ -32,7 +32,7 @@ function ageSpeech(){
 }
 
 function clearSpeechBox(){
-  let speechBox = document.getElementById("DialogueBox");
+  let speechBox = document.getElementById("SpeechBox");
   while (speechBox.lastChild){
     speechBox.removeChild(speechBox.lastChild);
   }
@@ -49,15 +49,15 @@ function createSpan(msg, isFresh){
 function renderSpeech(){
   let flen = freshMessages.length;
   let slen = staleMessages.length;
-  let speechBox = document.getElementById("DialogueBox");
+  let speechBox = document.getElementById("SpeechBox");
   let span, msg;
   clearSpeechBox();
-  for (let fdx = flen-1; f > -1; f--){
+  for (let fdx = flen-1; fdx > -1; fdx--){
     msg = freshMessages[fdx];
     span = createSpan(msg,true);
     speechBox.appendChild(span);
   }
-  for(let sdx = slen-1; s > -1; s--){
+  for(let sdx = slen-1; sdx > -1; sdx--){
     msg = staleMessages[sdx];
     span = createSpan(msg, false);
     speechBox.appendChild(span);

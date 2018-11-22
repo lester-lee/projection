@@ -19,8 +19,16 @@ body {
 #GameContainer {
   background: black; }
 
-#DialogueBox {
+/* Speech */
+#SpeechBox {
   font-family: 'VT323', monospace;
-  color: white;
   height: 100px;
-  font-size: 22px; }
+  font-size: 22px;
+  display: flex;
+  flex-flow: column; }
+
+.--fresh {
+  color: white; }
+
+.--stale {
+  color: #bbb; }
