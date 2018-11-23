@@ -7,7 +7,7 @@ function sendSpeech(msg) {
   freshMessages.push(msg);
 }
 
-function speak(scn, msgs) {
+function speak(scn, msgs, callback) {
   let idx = 0;
   let counter = 0;
   scn.paused = true;
@@ -21,7 +21,6 @@ function speak(scn, msgs) {
     counter++;
     if (idx < msgs.length){
       if (interactKey.isDown && counter > 100){
-        ageSpeech();
         sendSpeech(msgs[idx++]);
         renderSpeech();
         counter = 0;
@@ -31,6 +30,9 @@ function speak(scn, msgs) {
     else{
       scn.paused = false;
       // console.log("done!");
+      if (callback){
+        callback();
+      }
     }
   }
 }
@@ -85,7 +87,7 @@ function renderSpeech() {
     span = createSpan(msg, true);
     speechBox.appendChild(span);
   }
-  for (let sdx = slen - 1; sdx > -1; sdx--) {
+  for (let sdx = 0; sdx < slen; sdx++) {
     msg = staleMessages[sdx];
     span = createSpan(msg, false);
     speechBox.appendChild(span);

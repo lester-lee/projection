@@ -22,11 +22,13 @@ body {
 /* Speech */
 #SpeechBox {
   font-family: 'VT323', monospace;
-  height: 100px;
+  height: 150px;
   font-size: 22px;
   display: flex;
   flex-flow: column;
-  overflow: hidden; }
+  overflow: hidden;
+  position: relative;
+  top: -150px; }
 
 .--fresh {
   color: white; }

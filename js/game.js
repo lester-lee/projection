@@ -4,7 +4,7 @@
 let width = 640;
 let height = 640;
 
-document.getElementById("SpeechBox").style.width = width + "px";
+document.getElementById("SpeechBox").style.width = (width-200) + "px";
 
 const config = {
   type: Phaser.AUTO,
