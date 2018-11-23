@@ -25,7 +25,8 @@ body {
   height: 100px;
   font-size: 22px;
   display: flex;
-  flex-flow: column; }
+  flex-flow: column;
+  overflow: hidden; }
 
 .--fresh {
   color: white; }

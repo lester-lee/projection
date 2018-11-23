@@ -3,16 +3,44 @@ let staleMessages = [];
 let archivedMessages = [];
 let archiveLimit = 100;
 
-function sendSpeech(msg){
+function sendSpeech(msg) {
   freshMessages.push(msg);
 }
 
-function clearSpeech(){
+function speak(scn, msgs) {
+  let idx = 0;
+  let counter = 0;
+  scn.paused = true;
+  // Send first message
+  ageSpeech();
+  sendSpeech(msgs[idx++]);
+  renderSpeech();
+  // Wait for button press to send next messages
+  loop();
+  function loop(){
+    counter++;
+    if (idx < msgs.length){
+      if (interactKey.isDown && counter > 100){
+        ageSpeech();
+        sendSpeech(msgs[idx++]);
+        renderSpeech();
+        counter = 0;
+      }
+      setTimeout(loop, 0);
+    }
+    else{
+      scn.paused = false;
+      // console.log("done!");
+    }
+  }
+}
+
+function clearSpeech() {
   freshMessages = [];
   staleMessages = [];
 }
 
-function ageSpeech(){
+function ageSpeech() {
   // archive oldest stale message
   if (staleMessages[0] != null) {
     archivedMessages.unshift(staleMessages.pop());
@@ -31,14 +59,14 @@ function ageSpeech(){
   }
 }
 
-function clearSpeechBox(){
+function clearSpeechBox() {
   let speechBox = document.getElementById("SpeechBox");
-  while (speechBox.lastChild){
+  while (speechBox.lastChild) {
     speechBox.removeChild(speechBox.lastChild);
   }
 }
 
-function createSpan(msg, isFresh){
+function createSpan(msg, isFresh) {
   spanClass = isFresh ? "--fresh" : "--stale";
   let newSpan = document.createElement("span");
   newSpan.textContent = msg;
@@ -46,18 +74,18 @@ function createSpan(msg, isFresh){
   return newSpan;
 }
 
-function renderSpeech(){
+function renderSpeech() {
   let flen = freshMessages.length;
   let slen = staleMessages.length;
   let speechBox = document.getElementById("SpeechBox");
   let span, msg;
   clearSpeechBox();
-  for (let fdx = flen-1; fdx > -1; fdx--){
+  for (let fdx = flen - 1; fdx > -1; fdx--) {
     msg = freshMessages[fdx];
-    span = createSpan(msg,true);
+    span = createSpan(msg, true);
     speechBox.appendChild(span);
   }
-  for(let sdx = slen-1; sdx > -1; sdx--){
+  for (let sdx = slen - 1; sdx > -1; sdx--) {
     msg = staleMessages[sdx];
     span = createSpan(msg, false);
     speechBox.appendChild(span);

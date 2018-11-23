@@ -1,21 +1,26 @@
 ---
 ---
+
 let player;
 let showDebug = false;
 let cursors;
 let interactKey;
+let justInteracted = false;
+let interactTime;
+let interactThreshold = 3000;
 
-function createScene(tileset_url, map_json, Tiledset_name, scene_name){
+function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
   return new Phaser.Class({
     Extends: Phaser.Scene,
     initialize: function () {
       Phaser.Scene.call(this, scene_name);
       this.objects;
-      this.map;    
+      this.map;
+      this.paused = false;
     },
     preload: function () {
       // Load tiles
-      this.load.image(scene_name+"tiles", tileset_url);
+      this.load.image(scene_name + "tiles", tileset_url);
       this.load.tilemapTiledJSON(scene_name + "map", map_json);
       // Load player sprite
       this.load.spritesheet('player',
@@ -134,49 +139,56 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
       // Runs once per frame for the scene
       const speed = 175;
       controls = cursors;
+      if (time - interactTime > interactThreshold){
+        justInteracted = false;
+      }
 
       // Stop previous movement
       player.body.setVelocity(0);
+      if (!this.paused) {
+        // Horizontal movement
+        if (controls.left.isDown) {
+          player.body.setVelocityX(-speed);
+        } else if (controls.right.isDown) {
+          player.body.setVelocityX(speed);
+        }
 
-      // Horizontal movement
-      if (controls.left.isDown) {
-        player.body.setVelocityX(-speed);
-      } else if (controls.right.isDown) {
-        player.body.setVelocityX(speed);
-      }
+        // Vertical movement
+        if (controls.up.isDown) {
+          player.body.setVelocityY(-speed);
+        } else if (controls.down.isDown) {
+          player.body.setVelocityY(speed);
+        }
 
-      // Vertical movement
-      if (controls.up.isDown) {
-        player.body.setVelocityY(-speed);
-      } else if (controls.down.isDown) {
-        player.body.setVelocityY(speed);
-      }
+        // Update the animation last and give left/right animations precedence over up/down animations
+        if (controls.left.isDown) {
+          player.anims.play("left", true);
+        } else if (controls.right.isDown) {
+          player.anims.play("right", true);
+        } else if (controls.up.isDown) {
+          player.anims.play("up", true);
+        } else if (controls.down.isDown) {
+          player.anims.play("down", true);
+        } else {
+          player.anims.stop();
+        }
 
-      // Interaction
-      if (Phaser.Input.Keyboard.JustDown(interactKey)){
-        this.checkInteraction(player);
-      }
-
-      // Normalize and scale the velocity so that player can't move faster along a diagonal
-      player.body.velocity.normalize().scale(speed);
-
-      // Update the animation last and give left/right animations precedence over up/down animations
-      if (controls.left.isDown) {
-        player.anims.play("left", true);
-      } else if (controls.right.isDown) {
-        player.anims.play("right", true);
-      } else if (controls.up.isDown) {
-        player.anims.play("up", true);
-      } else if (controls.down.isDown) {
-        player.anims.play("down", true);
-      } else {
-        player.anims.stop();
-      }
+        // Interaction
+        if (!justInteracted && 
+            Phaser.Input.Keyboard.JustDown(interactKey)) {
+          this.checkInteraction(player);
+          justInteracted = true;
+          interactTime = time;
+          // console.log(interactTime);
+        }
+        // Normalize and scale the velocity so that player can't move faster along a diagonal
+        player.body.velocity.normalize().scale(speed);
+      }      
     },
-    getObject: function(playerDir) {
+    getObject: function (playerDir) {
       let idx = this.objects.length;
       let ox, oy;
-      switch (playerDir){
+      switch (playerDir) {
         case "up":
           ox = player.x;
           oy = player.y - 32
@@ -192,31 +204,31 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
         case "right":
           ox = player.x + 32;
           oy = player.y;
-          break;   
+          break;
       }
-      while (idx--){
+      while (idx--) {
         elem = this.objects[idx];
         // console.log(ox,oy, elem);
         difx = ox - elem.x;
         dify = oy - elem.y;
-        if( 0 <= difx && difx <= 17 &&
-            0 <= dify && dify <= 17){
-              return elem;
-            }
+        if (0 <= difx && difx <= 17 &&
+          0 <= dify && dify <= 17) {
+          return elem;
+        }
       }
       return null;
     },
-    checkInteraction: function(){
+    checkInteraction: function () {
       let playerDir = player.anims.currentAnim.key;
       // console.log(playerDir);
       obj = this.getObject(playerDir);
       // console.log(obj);
-      if (obj){
+      if (obj) {
         this.interact(obj);
       }
     },
-    interact: function(obj){
-      gameInteractions[obj.name]();
+    interact: function (obj) {
+      gameInteractions[obj.name](this);
     }
   });
 }

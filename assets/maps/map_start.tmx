@@ -192,7 +192,7 @@
 </data>
  </layer>
  <objectgroup name="Objects">
-  <object id="1" name="Spawn" x="384" y="1216" width="31" height="30"/>
+  <object id="1" name="Spawn" x="384" y="258" width="31" height="30"/>
   <object id="4" name="Door--start" x="386" y="128" width="29" height="31"/>
  </objectgroup>
  <layer name="Above" width="25" height="40">
