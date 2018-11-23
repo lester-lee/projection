@@ -9,6 +9,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
     initialize: function () {
       Phaser.Scene.call(this, scene_name);
       this.objects;
+      this.map;    
     },
     preload: function () {
       // Load tiles
@@ -26,17 +27,17 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
       // Runs once, after preload finishes
 
       // Load map
-      const map = this.make.tilemap({
+      this.map = this.make.tilemap({
         key: scene_name + "map"
       });
 
       // Parameters: (Tiled tileset name, Phaser cache in preload)
-      const tileset = map.addTilesetImage(Tiledset_name, scene_name + "tiles");
+      const tileset = this.map.addTilesetImage(Tiledset_name, scene_name + "tiles");
 
       // Parameters: (Tiled layer name, tileset, x, y)
-      const belowLayer = map.createStaticLayer("Below", tileset, 0, 0);
-      const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
-      const aboveLayer = map.createStaticLayer("Above", tileset, 0, 0);
+      const belowLayer = this.map.createStaticLayer("Below", tileset, 0, 0);
+      const worldLayer = this.map.createStaticLayer("World", tileset, 0, 0);
+      const aboveLayer = this.map.createStaticLayer("Above", tileset, 0, 0);
 
       worldLayer.setCollisionByProperty({
         collides: true
@@ -44,10 +45,10 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
       aboveLayer.setDepth(10);
 
       // Find "Spawn" object from Tiled
-      const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn");
+      const spawnPoint = this.map.findObject("Objects", obj => obj.name === "Spawn");
 
       // Get objects from Tiled
-      this.objects = map.objects[0].objects;
+      this.objects = this.map.objects[0].objects;
 
       // Create a sprite with physics enabled via the physics system. The image used for the sprite has
       // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
@@ -99,7 +100,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
       const camera = this.cameras.main;
       camera.startFollow(player);
       // Set camera bounds
-      camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+      camera.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
       // Create object for arrow keys
       cursors = this.input.keyboard.createCursorKeys();
@@ -151,7 +152,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
 
       // Interaction
       if (Phaser.Input.Keyboard.JustDown(interactKey)){
-        checkInteraction(player);
+        this.checkInteraction(player);
       }
 
       // Normalize and scale the velocity so that player can't move faster along a diagonal
@@ -171,27 +172,49 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name){
       }
     },
     getObject: function(playerDir) {
-      let olength = this.objects.length;
-      let odx;
-      let cur_obj;
-      let x_range, y_range = [], [];
-      /*
+      let idx = this.objects.length;
+      let ox, oy;
       switch (playerDir){
         case "up":
-          x_range += 
+          ox = player.x;
+          oy = player.y - 32
+          break;
+        case "down":
+          ox = player.x;
+          oy = player.y + 32;
+          break;
+        case "left":
+          ox = player.x - 32;
+          oy = player.y;
+          break;
+        case "right":
+          ox = player.x + 32;
+          oy = player.y;
+          break;   
       }
-      for (odx = 0; odx < olength; o++){
-        cur_obj = this.objects[odx];
-        
+      while (idx--){
+        elem = this.objects[idx];
+        // console.log(ox,oy, elem);
+        difx = ox - elem.x;
+        dify = oy - elem.y;
+        if( 0 <= difx && difx <= 17 &&
+            0 <= dify && dify <= 17){
+              return elem;
+            }
       }
-      */
-     let pTile = this.map.getTileAtWorldXY(player.x, player.y);
-     console.log(pTile);
+      return null;
     },
     checkInteraction: function(){
       let playerDir = player.anims.currentAnim.key;
-      console.log(playerDir);
-      obj = getObject(playerDir);
+      // console.log(playerDir);
+      obj = this.getObject(playerDir);
+      // console.log(obj);
+      if (obj){
+        this.interact(obj);
+      }
+    },
+    interact: function(obj){
+      gameInteractions[obj.name]();
     }
   });
 }
