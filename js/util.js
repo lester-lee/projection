@@ -57,6 +57,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
 
       // Get objects from Tiled
       this.objects = this.map.objects[0].objects;
+      console.log(this.objects);
 
       // Create a sprite with physics enabled via the physics system. The image used for the sprite has
       // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
