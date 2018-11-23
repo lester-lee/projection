@@ -6,27 +6,24 @@ const gameInteractions = {
     speak(scene, [
       "The door looms before you.",
       "The paint looks aged.",
-      "Will you try going inside?",
       "Yeah Lorem ipsum",
       "you know it baby",
       "ehre's a lot of text ooo boy",
       "whatup in the club",
-      "yoasdafsd"
+      "Will you try going inside?",
+      "A: Yes B: No"
     ],
     function() {
-      ageSpeech();
-      renderSpeech();
-      scene.scene.start("scene_projector");
-      speak(scene, [
-        "The door looms before you.",
-        "The paint looks aged.",
-        "Will you try going inside?",
-        "Yeah Lorem ipsum",
-        "you know it baby",
-        "ehre's a lot of text ooo boy this one here is a lrasdfdsf really long line yeah it is",
-        "whatup in the club",
-        "yoasdafsd"
-      ])
+      waitForKeys(scene, {
+        "interact": function () {
+          ageSpeech();
+          renderSpeech();
+          scene.scene.start("scene_projector");
+        },
+        "cancel": function(){
+          console.log("game over");
+        }
+      });
     });
   }
 };

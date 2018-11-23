@@ -4,7 +4,8 @@
 let player;
 let showDebug = false;
 let cursors;
-let interactKey;
+
+let interactKey, cancelKey;
 let justInteracted = false;
 let interactTime;
 let interactThreshold = 3000;
@@ -131,6 +132,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
 
       // Set up interact key
       interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
+      cancelKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
     },
     wake: function () {
       // idk what this does
@@ -139,7 +141,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       // Runs once per frame for the scene
       const speed = 175;
       controls = cursors;
-      if (time - interactTime > interactThreshold){
+      if (time - interactTime > interactThreshold) {
         justInteracted = false;
       }
 
@@ -174,8 +176,8 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
         }
 
         // Interaction
-        if (!justInteracted && 
-            Phaser.Input.Keyboard.JustDown(interactKey)) {
+        if (!justInteracted &&
+          Phaser.Input.Keyboard.JustDown(interactKey)) {
           this.checkInteraction(player);
           justInteracted = true;
           interactTime = time;
@@ -183,7 +185,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
         }
         // Normalize and scale the velocity so that player can't move faster along a diagonal
         player.body.velocity.normalize().scale(speed);
-      }      
+      }
     },
     getObject: function (playerDir) {
       let idx = this.objects.length;
@@ -231,4 +233,22 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       gameInteractions[obj.name](this);
     }
   });
+}
+
+function waitForKeys(scn, fns) {
+  let counter = 0;
+  scn.paused = true;
+  loop();
+  function loop() {
+    counter++;
+    if (interactKey.isDown && counter > 100) {
+      scn.paused = false;
+      return fns["interact"]();
+    }
+    if (cancelKey.isDown && counter > 100) {
+      scn.paused = false;
+      return fns["cancel"]();
+    }
+    setTimeout(loop, 0);
+  }
 }
