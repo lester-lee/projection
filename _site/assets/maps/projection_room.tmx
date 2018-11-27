@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextobjectid="5">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="8">
  <tileset firstgid="1" name="projection_room_tileset" tilewidth="32" tileheight="32" tilecount="32" columns="4">
   <image source="../tilesets/projection_room.png" width="128" height="256"/>
   <tile id="0">
@@ -73,7 +73,7 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Below" width="25" height="25" opacity="0.9">
+ <layer id="1" name="Below" width="25" height="25" opacity="0.9">
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -102,7 +102,7 @@
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
  </layer>
- <layer name="World" width="25" height="25">
+ <layer id="2" name="World" width="25" height="25">
   <data encoding="csv">
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,2,3,3,3,3,3,3,3,3,3,3,3,4,5,5,5,5,5,5,
@@ -131,12 +131,15 @@
 5,5,5,5,5,5,5,5,5,5,5,5,31,5,5,5,5,5,5,5,5,5,5,5,5
 </data>
  </layer>
- <objectgroup name="Objects">
+ <objectgroup id="3" name="Objects">
   <object id="1" name="Spawn" x="383" y="737" width="32" height="30" visible="0"/>
   <object id="3" name="Spawn" x="399.5" y="752.75"/>
   <object id="4" name="Projection_chair" x="418" y="355" width="27" height="27"/>
+  <object id="5" name="Door--projection" x="389" y="768" width="21" height="21"/>
+  <object id="6" x="492" y="895" width="1"/>
+  <object id="7" name="Projector" x="385" y="351" width="28" height="32"/>
  </objectgroup>
- <layer name="Above" width="25" height="25">
+ <layer id="4" name="Above" width="25" height="25">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

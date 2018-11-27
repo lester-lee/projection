@@ -5,7 +5,7 @@ let player;
 let showDebug = false;
 let cursors;
 
-let interactKey, cancelKey;
+let interactKey, XKey, YKey, BKey;
 let justInteracted = false;
 let interactTime;
 let interactThreshold = 3000;
@@ -133,7 +133,9 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
 
       // Set up interact key
       interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
-      cancelKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K);
+      XKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+      YKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Y);
+      BKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
     },
     wake: function () {
       // idk what this does
@@ -242,13 +244,21 @@ function waitForKeys(scn, fns) {
   loop();
   function loop() {
     counter++;
-    if (interactKey.isDown && counter > 100) {
+    if (interactKey.isDown && counter > 100 && 'A' in fns) {
       scn.paused = false;
-      return fns["interact"]();
+      return fns["A"]();
     }
-    if (cancelKey.isDown && counter > 100) {
+    if (XKey.isDown && counter > 100 && 'X' in fns) {
       scn.paused = false;
-      return fns["cancel"]();
+      return fns["X"]();
+    }
+    if (YKey.isDown && counter > 100 && 'Y' in fns) {
+      scn.paused = false;
+      return fns["Y"]();
+    }
+    if (BKey.isDown && counter > 100 && 'B' in fns) {
+      scn.paused = false;
+      return fns["B"]();
     }
     setTimeout(loop, 0);
   }

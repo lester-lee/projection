@@ -1,14 +1,15 @@
 const gameInteractions = {
+  /* Start map */
   "Door--start": function (scene) {
     speak(scene,
       ["The door looms before you.",
         "You're not sure how long this building has been here.",
         "Will you try going inside?",
-        "A: Yes B: No"
+        "X: Yes Y: No"
       ],
       function () {
         waitForKeys(scene, {
-          "interact": function () {
+          "X": function () {
             ageSpeech();
             renderSpeech();
             speak(scene,
@@ -20,16 +21,30 @@ const gameInteractions = {
                 scene.scene.start("scene_projector");
               });
           },
-          "cancel": function () {
+          "Y": function () {
             console.log("game over");
           }
         });
       });
   },
+  /* Projection Room */
   "Projection_chair": function (scene) {
     console.log("hm");
     speak(scene,
       ["It's a chair.",
         "It looks quite comfy."]);
+  },
+  "Door--projection": function (scene) {
+    speak(scene,
+      ["The doorknob rattles, but it won't turn.",
+      "Looks like you're stuck here."]);
+  },
+  "Projector": function (scene) {
+    speak(scene,
+      ["It's a projector.",
+      "It's on, but nothing's being shown right now.",
+      "You notice some buttons on the side.",
+      "Do you want to press one?",
+      "X: Yes, Y: No"]);
   }
 };
