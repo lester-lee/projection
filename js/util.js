@@ -1,10 +1,14 @@
 ---
 ---
-
+// map variables
 let player;
 let showDebug = false;
 let cursors;
 
+let aboveLayer, mapW, mapH;
+let speechCounter = 0;
+
+// interaction
 let interactKey, XKey, YKey, BKey;
 let justInteracted = false;
 let interactTime;
@@ -16,7 +20,6 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
     initialize: function () {
       Phaser.Scene.call(this, scene_name);
       this.objects;
-      this.map;
       this.paused = false;
     },
     preload: function () {
@@ -35,17 +38,20 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       // Runs once, after preload finishes
 
       // Load map
-      this.map = this.make.tilemap({
+      const map = this.make.tilemap({
         key: scene_name + "map"
       });
 
+      mapW = map.width;
+      mapH = map.height;
+
       // Parameters: (Tiled tileset name, Phaser cache in preload)
-      const tileset = this.map.addTilesetImage(Tiledset_name, scene_name + "tiles");
+      const tileset = map.addTilesetImage(Tiledset_name, scene_name + "tiles");
 
       // Parameters: (Tiled layer name, tileset, x, y)
-      const belowLayer = this.map.createStaticLayer("Below", tileset, 0, 0);
-      const worldLayer = this.map.createStaticLayer("World", tileset, 0, 0);
-      const aboveLayer = this.map.createStaticLayer("Above", tileset, 0, 0);
+      const belowLayer = map.createStaticLayer("Below", tileset, 0, 0);
+      const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
+      aboveLayer = map.createDynamicLayer("Above", tileset, 0, 0);
 
       worldLayer.setCollisionByProperty({
         collides: true
@@ -53,10 +59,10 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       aboveLayer.setDepth(10);
 
       // Find "Spawn" object from Tiled
-      const spawnPoint = this.map.findObject("Objects", obj => obj.name === "Spawn");
+      const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn");
 
       // Get objects from Tiled
-      this.objects = this.map.objects[0].objects;
+      this.objects = map.objects[0].objects;
       console.log(this.objects);
 
       // Create a sprite with physics enabled via the physics system. The image used for the sprite has
@@ -109,7 +115,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       const camera = this.cameras.main;
       camera.startFollow(player);
       // Set camera bounds
-      camera.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+      camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
       // Create object for arrow keys
       cursors = this.input.keyboard.createCursorKeys();
@@ -144,8 +150,17 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       // Runs once per frame for the scene
       const speed = 175;
       controls = cursors;
+
+      // Put break between interactions
       if (time - interactTime > interactThreshold) {
         justInteracted = false;
+      }
+
+      // Generate random speech bubbles
+      speechCounter += 1;
+      if (speechCounter > 200){
+        speechCounter = 0;
+        this.generateSpeechTile();
       }
 
       // Stop previous movement
@@ -234,6 +249,11 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
     },
     interact: function (obj) {
       gameInteractions[obj.name](this);
+    },
+    generateSpeechTile: function(){
+      let w = Math.floor(Math.random() * mapW);
+      let h = Math.floor(Math.random() * mapH);
+      aboveLayer.putTileAt(5, w, h);
     }
   });
 }
