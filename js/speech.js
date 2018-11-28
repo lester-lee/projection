@@ -40,6 +40,10 @@ function speak(scn, msgs, callback) {
   }
 }
 
+function speakBubble(scn, scn_name) {
+  console.log(scn);
+}
+
 function clearSpeech() {
   freshMessages = [];
   staleMessages = [];

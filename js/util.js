@@ -15,6 +15,7 @@ let interactTime;
 let interactThreshold = 3000;
 
 function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
+  console.log(tileset_url, map_json);
   return new Phaser.Class({
     Extends: Phaser.Scene,
     initialize: function () {
@@ -47,6 +48,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
 
       // Parameters: (Tiled tileset name, Phaser cache in preload)
       const tileset = map.addTilesetImage(Tiledset_name, scene_name + "tiles");
+      console.log(tileset);
 
       // Parameters: (Tiled layer name, tileset, x, y)
       const belowLayer = map.createStaticLayer("Below", tileset, 0, 0);
@@ -151,11 +153,6 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       const speed = 175;
       controls = cursors;
 
-      // Put break between interactions
-      if (time - interactTime > interactThreshold) {
-        justInteracted = false;
-      }
-
       // Generate random speech bubbles
       speechCounter += 1;
       if (speechCounter > 200){
@@ -166,6 +163,10 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       // Stop previous movement
       player.body.setVelocity(0);
       if (!this.paused) {
+        // Put break between interactions
+        if (time - interactTime > interactThreshold) {
+          justInteracted = false;
+        }
         // Horizontal movement
         if (controls.left.isDown) {
           player.body.setVelocityX(-speed);
@@ -248,12 +249,27 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       }
     },
     interact: function (obj) {
-      gameInteractions[obj.name](this);
+      gameInteractions[obj.name](this, obj);
     },
     generateSpeechTile: function(){
       let w = Math.floor(Math.random() * mapW);
       let h = Math.floor(Math.random() * mapH);
-      aboveLayer.putTileAt(5, w, h);
+      if (!aboveLayer.getTileAt(w,h)){
+        aboveLayer.putTileAt(1, w, h);
+        this.objects.push({
+          name: "Speech_bubble",
+          scene: scene_name,
+          x: 32 * w,
+          y: 32 * h
+        });
+      console.log(this.objects);
+      }
+    },
+    findObjectAtWorldXY: function(x, y){
+      let len = this.objects.length - 1;
+      while (len){
+        let o = this.objects[len--];
+      }
     }
   });
 }

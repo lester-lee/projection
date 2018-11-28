@@ -2,6 +2,9 @@
 ---
 
 const gameInteractions = {
+  "Speech_bubble": function(scene, obj){
+    speak_bubble(scene, obj.scene);
+  },
   /* Start map */
   "Door--start": function (scene) {
     speak(scene,
