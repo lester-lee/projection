@@ -6,6 +6,18 @@ let staleMessages = [];
 let archivedMessages = [];
 let archiveLimit = 100;
 
+let bubbleMessages = {
+  "scene_start": [],
+  "scene_projector": [
+    "It's eerily quiet in here.",
+    "Where did all the people go?",
+    "Don't remember this room being here.",
+    "Aren't there other rooms in this building?",
+    "It smells faintly like a hospital.",
+    "Where's the furniture?"
+  ]
+}
+
 function sendSpeech(msg) {
   freshMessages.push(msg);
 }
@@ -41,7 +53,10 @@ function speak(scn, msgs, callback) {
 }
 
 function speakBubble(scn) {
-  console.log(scn.scene.key);
+  let possible_messages = bubbleMessages[scn.scene.key];
+  speak(scn, [
+    possible_messages[Math.floor(Math.random() * possible_messages.length)]
+  ]);
 }
 
 function clearSpeech() {
