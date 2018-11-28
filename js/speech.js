@@ -40,8 +40,8 @@ function speak(scn, msgs, callback) {
   }
 }
 
-function speakBubble(scn, scn_name) {
-  console.log(scn);
+function speakBubble(scn) {
+  console.log(scn.scene.key);
 }
 
 function clearSpeech() {

@@ -230,10 +230,9 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       while (idx--) {
         elem = this.objects[idx];
         // console.log(ox,oy, elem);
-        difx = ox - elem.x;
-        dify = oy - elem.y;
-        if (0 <= difx && difx <= 17 &&
-          0 <= dify && dify <= 17) {
+        difx = Math.abs(ox - (elem.x+16));
+        dify = Math.abs(oy - (elem.y+16));
+        if (difx <= 10 && dify <= 10) {
           return elem;
         }
       }
@@ -258,11 +257,9 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
         aboveLayer.putTileAt(1, w, h);
         this.objects.push({
           name: "Speech_bubble",
-          scene: scene_name,
           x: 32 * w,
           y: 32 * h
         });
-      console.log(this.objects);
       }
     },
     findObjectAtWorldXY: function(x, y){
