@@ -11,6 +11,7 @@ let speechCounter = 0;
 // interaction
 let interactKey, XKey, YKey, BKey;
 let justInteracted = false;
+let justInteractedWith;
 let interactTime;
 let interactThreshold = 3000;
 
@@ -163,10 +164,6 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       // Stop previous movement
       player.body.setVelocity(0);
       if (!this.paused) {
-        // Put break between interactions
-        if (time - interactTime > interactThreshold) {
-          justInteracted = false;
-        }
         // Horizontal movement
         if (controls.left.isDown) {
           player.body.setVelocityX(-speed);
@@ -193,17 +190,21 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
         } else {
           player.anims.stop();
         }
-
-        // Interaction
-        if (!justInteracted &&
-          Phaser.Input.Keyboard.JustDown(interactKey)) {
-          this.checkInteraction(player);
-          justInteracted = true;
-          interactTime = time;
-          // console.log(interactTime);
-        }
         // Normalize and scale the velocity so that player can't move faster along a diagonal
         player.body.velocity.normalize().scale(speed);
+
+        // Interaction
+
+        // Put break between interactions
+        if (time - interactTime > interactThreshold) {
+          justInteracted = false;
+        }
+
+        if (!justInteracted &&
+          Phaser.Input.Keyboard.JustDown(interactKey)) {
+          this.checkInteraction(time);
+          // console.log(interactTime);
+        }
       }
     },
     getObject: function (playerDir) {
@@ -238,17 +239,22 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       }
       return null;
     },
-    checkInteraction: function () {
+    checkInteraction: function (time) {
       let playerDir = player.anims.currentAnim.key;
       // console.log(playerDir);
       obj = this.getObject(playerDir);
       // console.log(obj);
       if (obj) {
-        this.interact(obj);
+        this.interact(obj, time);
       }
     },
-    interact: function (obj) {
+    interact: function (obj, time) {
+      // run the interaction function
+      justInteracted = true;
       gameInteractions[obj.name](this, obj);
+      // start the timer for interacting again
+      interactTime = time;
+      console.log(interactTime);
     },
     generateSpeechTile: function(){
       let w = Math.floor(Math.random() * mapW);

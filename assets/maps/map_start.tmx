@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="25" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="6">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="25" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="15">
  <tileset firstgid="1" name="map_start_tileset" tilewidth="32" tileheight="32" tilecount="25" columns="5">
   <image source="../tilesets/map_start.png" width="160" height="160"/>
   <tile id="0">
@@ -199,6 +199,14 @@
  <objectgroup id="3" name="Objects">
   <object id="1" name="Spawn" x="384" y="258" width="31" height="30"/>
   <object id="4" name="Door--start" x="386" y="128" width="29" height="31"/>
+  <object id="7" name="Pillar--start" x="320.25" y="895.75" width="32" height="32"/>
+  <object id="8" name="Pillar--start" x="320.25" y="863.75" width="32" height="32"/>
+  <object id="9" name="Pillar--start" x="320.25" y="831.75" width="32" height="32"/>
+  <object id="10" name="Pillar--start" x="320.25" y="800" width="32" height="32"/>
+  <object id="11" name="Pillar--start" x="447.75" y="895.625" width="32" height="32"/>
+  <object id="12" name="Pillar--start" x="447.75" y="863.625" width="32" height="32"/>
+  <object id="13" name="Pillar--start" x="447.75" y="831.625" width="32" height="32"/>
+  <object id="14" name="Pillar--start" x="447.75" y="799.875" width="32" height="32"/>
  </objectgroup>
  <layer id="4" name="Above" width="25" height="40">
   <data encoding="csv">

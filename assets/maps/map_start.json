@@ -51,6 +51,94 @@
                  "width":29,
                  "x":386,
                  "y":128
+                }, 
+                {
+                 "height":32,
+                 "id":7,
+                 "name":"Pillar--start",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":320.25,
+                 "y":895.75
+                }, 
+                {
+                 "height":32,
+                 "id":8,
+                 "name":"Pillar--start",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":320.25,
+                 "y":863.75
+                }, 
+                {
+                 "height":32,
+                 "id":9,
+                 "name":"Pillar--start",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":320.25,
+                 "y":831.75
+                }, 
+                {
+                 "height":32,
+                 "id":10,
+                 "name":"Pillar--start",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":320.25,
+                 "y":800
+                }, 
+                {
+                 "height":32,
+                 "id":11,
+                 "name":"Pillar--start",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":447.75,
+                 "y":895.625
+                }, 
+                {
+                 "height":32,
+                 "id":12,
+                 "name":"Pillar--start",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":447.75,
+                 "y":863.625
+                }, 
+                {
+                 "height":32,
+                 "id":13,
+                 "name":"Pillar--start",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":447.75,
+                 "y":831.625
+                }, 
+                {
+                 "height":32,
+                 "id":14,
+                 "name":"Pillar--start",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":447.75,
+                 "y":799.875
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -71,7 +159,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":6,
+ "nextobjectid":15,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",

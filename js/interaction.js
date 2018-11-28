@@ -2,7 +2,7 @@
 ---
 
 const gameInteractions = {
-  "Speech_bubble": function(scene){
+  "Speech_bubble": function (scene) {
     speakBubble(scene);
   },
   /* Start map */
@@ -22,7 +22,8 @@ const gameInteractions = {
               ["You reach for the doorknob.",
                 "It sticks for a bit, but it turns.",
                 "The door opens with a creak."
-              ], function () {
+              ],
+              function () {
                 scene.cameras.main.fade(500);
                 scene.scene.start("scene_projector");
               });
@@ -33,24 +34,35 @@ const gameInteractions = {
         });
       });
   },
+  "Pillar--start": function (scene) {
+    speak(scene,
+      [
+        "It's made of stone.",
+        "The inscriptions are long faded.",
+        "You can't make out any of it."
+      ]);
+  },
   /* Projection Room */
   "Projection_chair": function (scene) {
     console.log("hm");
     speak(scene,
       ["It's a chair.",
-        "It looks quite comfy."]);
+        "It looks quite comfy."
+      ]);
   },
   "Door--projection": function (scene) {
     speak(scene,
       ["The doorknob rattles, but it won't turn.",
-      "Looks like you're stuck here."]);
+        "Looks like you're stuck here."
+      ]);
   },
   "Projector": function (scene) {
     speak(scene,
       ["It's a projector.",
-      "It's on, but nothing's being shown right now.",
-      "You notice some buttons on the side.",
-      "Do you want to press one?",
-      "X: Yes, Y: No"]);
+        "It's on, but nothing's being shown right now.",
+        "You notice some buttons on the side.",
+        "Do you want to press one?",
+        "X: Yes, Y: No"
+      ]);
   }
 };
