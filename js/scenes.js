@@ -13,3 +13,10 @@ var scene_projector = createScene(
     "map_projection_tileset",
     "scene_projector"
     );
+
+var scene_city = createScene(
+  "{{site.baseurl}}/assets/tilesets/map_city.png",
+  "{{site.baseurl}}/assets/maps/map_city.json",
+  "map_city_tileset",
+  "scene_city"
+);

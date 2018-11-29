@@ -1,5 +1,5 @@
----
----
+-- -
+-- -
 
 const gameInteractions = {
   "Speech_bubble": function (scene) {
@@ -44,7 +44,6 @@ const gameInteractions = {
   },
   /* Projection Room */
   "Projection_chair": function (scene) {
-    console.log("hm");
     speak(scene,
       ["It's a chair.",
         "It looks quite comfy."
@@ -63,6 +62,37 @@ const gameInteractions = {
         "You notice some buttons on the side.",
         "Do you want to press one?",
         "X: Yes, Y: No"
+      ],
+      function () {
+        waitForKeys(scene, {
+          "X": function () {
+            ageSpeech();
+            renderSpeech();
+            speak(scene,
+              ["The projector hums.",
+                "You feel dizzy".
+              ],
+              function () {
+                scene.cameras.main.fade(5000);
+                scene.scene.start("scene_city");
+              });
+          },
+          "Y": function () {
+            console.log("game over");
+          }
+        });
+      });
+  },
+  /* City */
+  "Car": function (scene) {
+    speak(scene,
+      ["It's a sedan."]);
+  },
+  "Door--city": function (scene) {
+    speak(scene,
+      ["The door's locked.",
+        "Makes sense.",
+        "This isn't your apartment, after all."
       ]);
   }
 };
