@@ -11,7 +11,7 @@ let aboveLayer, mapW, mapH;
 
 // speech bubbles
 let speechCounter = 0;
-let speechThreshold = 200;
+let speechThreshold = 180;
 let speechRange = 256;
 
 // interaction
@@ -200,21 +200,12 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
         player.body.velocity.normalize().scale(speed);
 
         // Interaction
-
-        // Put break between interactions
-        if (time - interactTime > interactThreshold) {
-          justInteracted = false;
-        }
-
-        if (!justInteracted &&
-          Phaser.Input.Keyboard.JustDown(interactKey)) {
-          this.checkInteraction(time);
-          // console.log(interactTime);
+        if (Phaser.Input.Keyboard.JustDown(interactKey)) {
+          this.checkInteraction();
         }
       }
     },
     getObject: function (playerDir) {
-      let idx = this.objects.length;
       let ox, oy;
       switch (playerDir) {
         case "up":
@@ -234,39 +225,27 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
           oy = player.y;
           break;
       }
-      while (idx--) {
-        elem = this.objects[idx];
-        // console.log(ox,oy, elem);
-        difx = Math.abs(ox - (elem.x+16));
-        dify = Math.abs(oy - (elem.y+16));
-        if (difx <= 10 && dify <= 10) {
-          return elem;
-        }
-      }
-      return null;
+      return this.getObjectAtWorldXY(ox, oy);
     },
-    checkInteraction: function (time) {
+    checkInteraction: function () {
       let playerDir = player.anims.currentAnim.key;
       // console.log(playerDir);
       obj = this.getObject(playerDir);
       // console.log(obj);
-      if (obj) {
-        this.interact(obj, time);
+      if (obj && obj.name !== justInteractedWith ) {
+        this.interact(obj);
       }
     },
-    interact: function (obj, time) {
+    interact: function (obj) {
+      justInteractedWith = obj.name === "Speech_bubble" ? "" : obj.name;
       // run the interaction function
-      justInteracted = true;
       gameInteractions[obj.name](this, obj);
-      // start the timer for interacting again
-      interactTime = time;
-      console.log(interactTime);
     },
     generateSpeechTile: function(){
       let w = -speechRange + player.x + (Math.random() * speechRange*2);
       let h = -speechRange + player.y + (Math.random() * speechRange*2);
       if (!aboveLayer.getTileAtWorldXY(w,h) &&
-          !this.isObjectAtWorldXY(w, h)){
+          !this.getObjectAtWorldXY(w, h)){
         aboveLayer.putTileAtWorldXY(1, w, h);
         this.objects.push({
           name: "Speech_bubble",
@@ -275,17 +254,23 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
         });
       }
     },
-    isObjectAtWorldXY: function(x, y){
-      let len = this.objects.length - 1;
-      while (len){
-        let o = this.objects[len--];
-        let difx = Math.abs(x - o.x);
-        let dify = Math.abs(y - o.y);
-        if (difx <= 32 && dify <= 32){
-          return true;
+    getObjectAtWorldXY: function(x, y, verbose=false){
+      let tileX = Math.floor(x / 32),
+          tileY = Math.floor(y / 32);
+      let len = this.objects.length;
+      while (len--){
+        let o = this.objects[len];
+        let oTX = Math.floor(o.x / 32),
+          oTY = Math.floor(o.y / 32);
+        if (verbose){
+          console.log(o.name, o.x, o.y);
+        console.log(tileX, tileY, oTX, oTY);
+        }
+        if (tileX === oTX && tileY === oTY){
+          return o;
         }
       }
-      return false;
+      return null;
     }
   });
 }

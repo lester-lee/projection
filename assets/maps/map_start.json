@@ -31,25 +31,25 @@
          "name":"Objects",
          "objects":[
                 {
-                 "height":30,
+                 "height":32,
                  "id":1,
                  "name":"Spawn",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":31,
-                 "x":383,
-                 "y":1185
+                 "width":32,
+                 "x":384,
+                 "y":1184
                 }, 
                 {
-                 "height":31,
+                 "height":32,
                  "id":4,
                  "name":"Door--start",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":29,
-                 "x":386,
+                 "width":32,
+                 "x":384,
                  "y":128
                 }, 
                 {
@@ -60,8 +60,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":320.25,
-                 "y":895.75
+                 "x":320,
+                 "y":864
                 }, 
                 {
                  "height":32,
@@ -69,9 +69,9 @@
                  "name":"Pillar--start",
                  "rotation":0,
                  "type":"",
-                 "visible":true,
+                 "visible":false,
                  "width":32,
-                 "x":320.25,
+                 "x":320,
                  "y":863.75
                 }, 
                 {
@@ -82,8 +82,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":320.25,
-                 "y":831.75
+                 "x":320,
+                 "y":832
                 }, 
                 {
                  "height":32,
@@ -93,7 +93,7 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":320.25,
+                 "x":320,
                  "y":800
                 }, 
                 {
@@ -115,8 +115,8 @@
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":447.75,
-                 "y":863.625
+                 "x":448,
+                 "y":864
                 }, 
                 {
                  "height":32,
@@ -139,6 +139,17 @@
                  "width":32,
                  "x":447.75,
                  "y":799.875
+                }, 
+                {
+                 "height":32,
+                 "id":15,
+                 "name":"Pillar--start",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":320,
+                 "y":896
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -159,7 +170,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":15,
+ "nextobjectid":16,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",
