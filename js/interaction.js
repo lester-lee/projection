@@ -1,5 +1,5 @@
--- -
--- -
+---
+---
 
 const gameInteractions = {
   "Speech_bubble": function (scene) {
@@ -70,7 +70,7 @@ const gameInteractions = {
             renderSpeech();
             speak(scene,
               ["The projector hums.",
-                "You feel dizzy".
+                "You feel dizzy",
               ],
               function () {
                 scene.cameras.main.fade(5000);
