@@ -94,5 +94,11 @@ const gameInteractions = {
         "Makes sense.",
         "This isn't your apartment, after all."
       ]);
+  },
+  "Person--city": function (scene) {
+    speak(scene, 
+      [
+        "yo"
+      ])
   }
 };

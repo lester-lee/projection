@@ -2,11 +2,17 @@
 ---
 // map variables
 let player;
+let playerSpeed = 150;
 let showDebug = false;
 let cursors;
 
+
 let aboveLayer, mapW, mapH;
+
+// speech bubbles
 let speechCounter = 0;
+let speechThreshold = 200; 
+let speechRange = 256;
 
 // interaction
 let interactKey, XKey, YKey, BKey;
@@ -151,12 +157,12 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
     },
     update: function (time, delta) {
       // Runs once per frame for the scene
-      const speed = 175;
+      let speed = playerSpeed;
       controls = cursors;
 
       // Generate random speech bubbles
       speechCounter += 1;
-      if (speechCounter > 200){
+      if (speechCounter > speechThreshold){
         speechCounter = 0;
         this.generateSpeechTile();
       }
@@ -257,22 +263,29 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       console.log(interactTime);
     },
     generateSpeechTile: function(){
-      let w = Math.floor(Math.random() * mapW);
-      let h = Math.floor(Math.random() * mapH);
-      if (!aboveLayer.getTileAt(w,h)){
-        aboveLayer.putTileAt(1, w, h);
+      let w = -speechRange + player.x + (Math.random() * speechRange*2);
+      let h = -speechRange + player.y + (Math.random() * speechRange*2);
+      if (!aboveLayer.getTileAtWorldXY(w,h) &&
+          !this.isObjectAtWorldXY(w, h)){
+        aboveLayer.putTileAtWorldXY(1, w, h);
         this.objects.push({
           name: "Speech_bubble",
-          x: 32 * w,
-          y: 32 * h
+          x: w,
+          y: h
         });
       }
     },
-    findObjectAtWorldXY: function(x, y){
+    isObjectAtWorldXY: function(x, y){
       let len = this.objects.length - 1;
       while (len){
         let o = this.objects[len--];
+        let difx = Math.abs(x - o.x);
+        let dify = Math.abs(y - o.y);
+        if (difx <= 32 && dify <= 32){
+          return true;
+        }
       }
+      return false;
     }
   });
 }

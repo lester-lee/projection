@@ -27,6 +27,7 @@ body {
 /* Speech */
 
 #SpeechBox {
+  z-index: 999;
   font-family: 'VT323', monospace;
   height: 150px;
   font-size: 22px;
