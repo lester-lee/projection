@@ -1,6 +1,14 @@
 ---
 ---
 
+function fadeTransition(scn, time, new_scn){
+  scn.cameras.main.fade(time, 0, 0, 0, false, function(c,p){
+    if (p > 0.9){
+      scn.scene.start(new_scn)
+    }
+  });
+}
+
 const gameInteractions = {
   "Speech_bubble": function (scene) {
     speakBubble(scene);
@@ -24,8 +32,7 @@ const gameInteractions = {
                 "The door opens with a creak."
               ],
               function () {
-                scene.cameras.main.fade(500);
-                scene.scene.start("scene_projector");
+                fadeTransition(scene, 2000, "scene_projector");
               });
           },
           "Y": function () {
@@ -73,9 +80,7 @@ const gameInteractions = {
                 "You feel dizzy",
               ],
               function () {
-                scene.cameras.main.fade(5000);
-                scene.scene.start("scene_city");
-              });
+                fadeTransition(scene, 2000, "scene_city");
           },
           "Y": function () {
             console.log("game over");
@@ -96,7 +101,7 @@ const gameInteractions = {
       ]);
   },
   "Person--city": function (scene) {
-    speak(scene, 
+    speak(scene,
       [
         "yo"
       ])
