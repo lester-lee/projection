@@ -7,7 +7,11 @@ let archivedMessages = [];
 let archiveLimit = 100;
 
 let bubbleMessages = {
-  "scene_start": [],
+  "scene_start": [
+    "Where is this?",
+    "You've been here before.",
+    "You've seen these steps before."
+  ],
   "scene_projector": [
     "It's eerily quiet in here.",
     "Where did all the people go?",
@@ -15,6 +19,15 @@ let bubbleMessages = {
     "Aren't there other rooms in this building?",
     "It smells faintly like a hospital.",
     "Where's the furniture?"
+  ],
+  "scene_city": [
+    "How long are they going to honk? It's not like it's doing anything.",
+    "There are so many people here.",
+    "This is a little overwhelming.",
+    "When did you learn how to drive?",
+    "It's hard to walk through all these people.",
+    "How tall are these buildings?",
+    "So much smog..."
   ]
 }
 
