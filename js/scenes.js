@@ -20,3 +20,10 @@ var scene_city = createScene(
   "map_city_tileset",
   "scene_city"
 );
+
+var scene_beach = createScene(
+  "{{site.baseurl}}/assets/tilesets/map_beach.png",
+  "{{site.baseurl}}/assets/maps/map_beach.json",
+  "map_beach_tileset",
+  "scene_beach"
+);

@@ -170,7 +170,7 @@ const gameInteractions = {
               "You take the key."
             ], function(){
               spokenTo["Person--city"] = true;
-              inventory["Key--city"] = true;
+              inventory["Key"] = true;
             });
           },
           "Y": function () {
@@ -178,20 +178,92 @@ const gameInteractions = {
               "Sorry.",
               "Didn't mean to keep you so long.",
               "Have a good one.",
-              "It's about time you head back.",
-              "The person falls silent."
+              "The person falls silent.",
+              "You feel dizzy."
             ], function(){
-              fadeTransition(scene, 2000, "scene_projector");
-            })
+              fadeTransition(scene, 2000, "scene_ending");
+            });
           }
         })
       })
   },
   /* Beach */
   "Person--beach": function (scene) {
+    if ("Person--beach" in spokenTo) {
+      speak(scene,
+        ["This person doesn't seem interested in talking anymore."]);
+      return;
+    }
     speak(scene, [
-
-    ]);
+      "I've been here a while.",
+      "Haven't caught anything, though.",
+      "I don't really know what's swimming in these waters.",
+      "I'll find out eventually.",
+      "Water laps against the sand.",
+      "I'm not in any hurry.",
+      "I used to be so rushed all the time.",
+      "Always feeling like I had to be doing something.",
+      "Had to be productive.",
+      "My hands had to be moving.",
+      "Then I found my way here.",
+      "A gull dives into the ocean.",
+      "I don't really remember how.",
+      "It's been so long.",
+      "I like it here, though.",
+      "It took me a while to adjust at first.",
+      "The sky darkens as passing clouds block the sun.",
+      "You don't see too many people around these parts.",
+      "I'm not supposed to be here, I've been told.",
+      "But nothing's happened to me yet, so here I am.",
+      "Besides, it's nice here, isn't it?",
+      "Sitting by the water.",
+      "I can feel the sun, which is more than what I can say for where I used to be.",
+      "Chains thud against the wooden dock.",
+      "Just the waves to keep me company.",
+      "And whatever I happen to catch.",
+      "And you, if you'd like to stay.",
+      "Do you want to keep listening?",
+      "X: Yes, Y: No"
+    ],
+    function(){
+      waitForKeys(scene, {
+        X: function(){
+          speak(scene, [
+            "Maybe I'll catch something now that you're here.",
+            "The person chuckles.",
+            "I know I can't stay here forever.",
+            "You see it too, don't you?",
+            "I'm not too worried.",
+            "I'm enjoying myself right now.",
+            "A flock of ducks land on the water.",
+            "I'll be okay.",
+            "I don't mean to keep you too long.",
+            "Thanks for listening.",
+            "Here.",
+            "You see that shack down there?",
+            "You can have a key.",
+            "It's a nice place.",
+            "I think you'll like it.",
+            "You take the key."
+          ], function(){
+            spokenTo["Person--beach"] = true;
+            inventory["Key"] = true;
+          });
+        },
+        Y: function(){
+          speak(scene, [
+            "Sorry.",
+            "Didn't mean to keep you so long.",
+            "Have a good one.",
+            "It's about time you head back.",
+            "The person falls silent.",
+            "You feel dizzy."
+          ], function () {
+            fadeTransition(scene, 2000, "scene_ending");
+          });
+        }
+      });
+    });
   }
 };
 

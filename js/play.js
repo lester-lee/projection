@@ -21,7 +21,7 @@ const config = {
       }
     }
   },
-  scene: [scene_city, scene_start, scene_projector]
+  scene: [scene_beach, scene_city, scene_start, scene_projector]
 };
 
 const game = new Phaser.Game(config);
