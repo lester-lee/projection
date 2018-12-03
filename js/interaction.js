@@ -1,7 +1,7 @@
 ---
 ---
 
-let spokenTo = {};
+  let spokenTo = {};
 let inventory = {};
 
 function fadeTransition(scn, time, new_scn) {
@@ -168,7 +168,7 @@ const gameInteractions = {
               "I don't think I could go back.",
               "Back there, anyway.",
               "You take the key."
-            ], function(){
+            ], function () {
               spokenTo["Person--city"] = true;
               inventory["Key"] = true;
             });
@@ -180,7 +180,7 @@ const gameInteractions = {
               "Have a good one.",
               "The person falls silent.",
               "You feel dizzy."
-            ], function(){
+            ], function () {
               fadeTransition(scene, 2000, "scene_ending");
             });
           }
@@ -225,44 +225,70 @@ const gameInteractions = {
       "Do you want to keep listening?",
       "X: Yes, Y: No"
     ],
-    function(){
+      function () {
+        waitForKeys(scene, {
+          X: function () {
+            speak(scene, [
+              "Maybe I'll catch something now that you're here.",
+              "The person chuckles.",
+              "I know I can't stay here forever.",
+              "You see it too, don't you?",
+              "I'm not too worried.",
+              "I'm enjoying myself right now.",
+              "A flock of ducks land on the water.",
+              "I'll be okay.",
+              "I don't mean to keep you too long.",
+              "Thanks for listening.",
+              "Here.",
+              "You see that shack down there?",
+              "You can have a key.",
+              "It's a nice place.",
+              "I think you'll like it.",
+              "You take the key."
+            ], function () {
+              spokenTo["Person--beach"] = true;
+              inventory["Key"] = true;
+            });
+          },
+          Y: function () {
+            speak(scene, [
+              "Sorry.",
+              "Didn't mean to keep you so long.",
+              "Have a good one.",
+              "The person falls silent.",
+              "You feel dizzy."
+            ], function () {
+              fadeTransition(scene, 2000, "scene_ending");
+            });
+          }
+        });
+      });
+  },
+  /* Mountain */
+  "Person--mountain": function (scene) {
+    speak(scene, ['Hey!', 'Nice to meet you.', 'It’s good to see another face around here.', 'Not many people hike up here in the winter.', 'The mountain is still.', 'It’s mighty cold, isn’t it?', 'I like it, though.', 'I try to come at least once a week, if not more often.', 'Depends on my schedule, but I try to make time.', 'Being up here makes me feel so alive.', 'The mountain is still.', 'Sometimes I like to bring my dog with me, but today she didn’t look like she wanted to trudge through the snow.', 'I don’t blame her.', 'I’m a little surprised you made it all the way up, what with the snowstorm that just blew by.', 'Me? I’m used to it.', 'A little snow can’t stop me.', 'The person smiles.', 'I guess it didn’t stop you, either.', 'The mountain is still.', 'I can’t remember the first time I hiked up here.', 'You would think that the first time coming up a mountain like this would be unforgettable, but here I am, having forgotten it.', 'That’s alright.', 'It just makes each time that much better.', 'You should come back in the fall, right when the leaves start changing.', 'It’s a beautiful sight. Makes me excited just thinking about it.', 'The person leans back and stretches their arms, their breath hanging in the air.', 'You want some hot chocolate?', 'X: Yes, Y: No'],
+    function() {
       waitForKeys(scene, {
-        X: function(){
-          speak(scene, [
-            "Maybe I'll catch something now that you're here.",
-            "The person chuckles.",
-            "I know I can't stay here forever.",
-            "You see it too, don't you?",
-            "I'm not too worried.",
-            "I'm enjoying myself right now.",
-            "A flock of ducks land on the water.",
-            "I'll be okay.",
-            "I don't mean to keep you too long.",
-            "Thanks for listening.",
-            "Here.",
-            "You see that shack down there?",
-            "You can have a key.",
-            "It's a nice place.",
-            "I think you'll like it.",
-            "You take the key."
-          ], function(){
-            spokenTo["Person--beach"] = true;
+        "X": function() {
+          ageSpeech();
+          renderSpeech();
+          speak(scene, ['Sweet!', 'Why don’t you head inside and make yourself comfortable?', 'I’ll be in right after you.', 'I just want to enjoy the view for a little longer.', 'The person falls silent.', 'The mountain is still.'],
+          function(){
+            spokenTo["Person--mountain"] = true;
             inventory["Key"] = true;
           });
         },
-        Y: function(){
+        "Y": function() {
           speak(scene, [
-            "Sorry.",
-            "Didn't mean to keep you so long.",
-            "Have a good one.",
-            "It's about time you head back.",
+            "Oh, that's alright.",
+            "Didn't mean to chatter away like that.",
             "The person falls silent.",
             "You feel dizzy."
-          ], function () {
+          ], function() {
             fadeTransition(scene, 2000, "scene_ending");
-          });
+          })
         }
-      });
+      })
     });
   }
 };
