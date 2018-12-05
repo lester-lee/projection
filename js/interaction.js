@@ -297,15 +297,21 @@ let bubbleMessages = {
   "scene_start": [
     "Where is this?",
     "You've been here before.",
-    "You've seen these steps before."
+    "You've seen these steps before.",
+    "It's a little bit chilly.",
+    "There's something off about this place.",
+    "You recognize the gate, but from where, you can't remember."
   ],
   "scene_projector": [
     "It's eerily quiet in here.",
     "Where did all the people go?",
-    "Don't remember this room being here.",
+    "You don't remember this room being here.",
     "Aren't there other rooms in this building?",
     "It smells faintly like a hospital.",
-    "Where's the furniture?"
+    "Where's the furniture?",
+    "Who set this up?",
+    "There should be other chairs, shouldn't there?",
+    "What's the projector doing here?"
   ],
   "scene_city": [
     "How long are they going to honk? It's not like it's doing anything.",
@@ -314,6 +320,39 @@ let bubbleMessages = {
     "You don't miss driving through the city.",
     "It's hard to walk through all these people.",
     "How tall are these buildings?",
-    "So much smog..."
+    "So much smog...",
+    "Aren't pigeons just rats with wings?",
+    "These apartments must be so crowded.",
+    "At least the corner stores are always open.",
+    "The food carts are making you hungry.",
+    "There's so much traffic.",
+    "It's a surprise you haven't bumped into anyone yet.",
+    "You wish you had headphones on.",
+    "Rent must be so high.",
+    "It smells a little dank.",
+    "Did someone really just do that?",
+    "The shadows of these buildings are so big."
+  ],
+  "scene_beach": [
+    "The sand is warm beneath your feet.",
+    "These palm trees are so tall.",
+    "The air is salty.",
+    "The sun shines brightly.",
+    "It feels good to see the sun.",
+    "Tiny crabs scurry along the sand.",
+    "You can always hear the water.",
+    "Do people really fish around here?",
+    "Maybe you should've brought a beach towel.",
+    "Who planted these bushes?",
+    "The beach feels a little deserted.",
+    "There's definitely no one playing volleyball here.",
+    "Both water and sky are azure.",
+    "It must be beautiful when the sun sets.",
+    "Reading under a palm tree... ah.",
+    "Are there clams here?",
+    "You wonder what the weirdest thing to wash ashore is."
+  ],
+  "scene_mountain": [
+    "The mountain is still."
   ]
 }
