@@ -23,7 +23,7 @@ function speak(scn, msgs, callback) {
   function loop(){
     counter++;
     if (idx < msgs.length){
-      if (interactKey.isDown && counter > 100){
+      if (interactKey.isDown && counter > 88){
         sendSpeech(msgs[idx++]);
         renderSpeech();
         counter = 0;

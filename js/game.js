@@ -2,7 +2,7 @@
 ---
 // map variables
 let player;
-let playerSpeed = 180;
+let playerSpeed = 188;
 let showDebug = false;
 let cursors;
 
@@ -22,7 +22,7 @@ let interactTime;
 let interactThreshold = 3000;
 
 function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
-  console.log(tileset_url, map_json);
+  // console.log(tileset_url, map_json);
   return new Phaser.Class({
     Extends: Phaser.Scene,
     initialize: function () {
@@ -55,7 +55,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
 
       // Parameters: (Tiled tileset name, Phaser cache in preload)
       const tileset = map.addTilesetImage(Tiledset_name, scene_name + "tiles");
-      console.log(tileset);
+      // console.log(tileset);
 
       // Parameters: (Tiled layer name, tileset, x, y)
       const belowLayer = map.createStaticLayer("Below", tileset, 0, 0);
@@ -72,7 +72,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
 
       // Get objects from Tiled
       this.objects = map.objects[0].objects;
-      console.log(this.objects);
+      // console.log(this.objects);
 
       // Create a sprite with physics enabled via the physics system. The image used for the sprite has
       // a bit of whitespace, so I'm using setSize & setOffset to control the size of the player's body.
@@ -264,7 +264,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
           oTY = Math.floor(o.y / 32);
         if (verbose){
           console.log(o.name, o.x, o.y);
-        console.log(tileX, tileY, oTX, oTY);
+          console.log(tileX, tileY, oTX, oTY);
         }
         if (tileX === oTX && tileY === oTY){
           return o;

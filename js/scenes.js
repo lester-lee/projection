@@ -51,7 +51,7 @@ var scene_ending = new Phaser.Class({
       key: "scene_ending_map"
     });
     const tileset = map.addTilesetImage("map_projection_tileset", "scene_ending_tiles");
-    console.log(map, tileset);
+    // console.log(map, tileset);
     // Parameters: (Tiled layer name, tileset, x, y)
     const belowLayer = map.createStaticLayer("Below", tileset, 0, 0);
     const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
