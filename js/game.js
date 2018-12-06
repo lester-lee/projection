@@ -2,7 +2,7 @@
 ---
 // map variables
 let player;
-let playerSpeed = 500;
+let playerSpeed = 180;
 let showDebug = false;
 let cursors;
 
@@ -11,7 +11,7 @@ let aboveLayer, mapW, mapH;
 
 // speech bubbles
 let speechCounter = 0;
-let speechThreshold = 180;
+let speechThreshold = 200;
 let speechRange = 256;
 
 // interaction
@@ -129,7 +129,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       // Create object for arrow keys
       cursors = this.input.keyboard.createCursorKeys();
 
-      /* Debug graphics 
+      /* Debug graphics
       this.input.keyboard.once("keydown_D", event => {
         // Turn on physics debugging to show player's hitbox
         this.physics.world.createDebugGraphic();
@@ -150,7 +150,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
       XKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
       YKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Y);
-      BKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
+      AKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     },
     wake: function () {
       // idk what this does
@@ -281,7 +281,7 @@ function waitForKeys(scn, fns) {
   loop();
   function loop() {
     counter++;
-    if (interactKey.isDown && counter > 100 && 'A' in fns) {
+    if (AKey.isDown && counter > 100 && 'A' in fns) {
       scn.paused = false;
       return fns["A"]();
     }
@@ -293,7 +293,7 @@ function waitForKeys(scn, fns) {
       scn.paused = false;
       return fns["Y"]();
     }
-    if (BKey.isDown && counter > 100 && 'B' in fns) {
+    if (interactKey.isDown && counter > 100 && 'B' in fns) {
       scn.paused = false;
       return fns["B"]();
     }

@@ -38,19 +38,20 @@ var scene_mountain = createScene(
 var scene_ending = new Phaser.Class({
   Extends: Phaser.Scene,
   initialize: function() {
-    Phaser.scene.call(this, "scene_ending");
+    Phaser.Scene.call(this, "scene_ending");
+    this.spoken = false;
   },
   preload: function(){
     // Load tiles
-    this.load.image("scene_ending_tiles", "{{site.baseurl}}/assets/tilesets/map_projector.png");
+    this.load.image("scene_ending_tiles", "{{site.baseurl}}/assets/tilesets/map_projection.png");
     this.load.tilemapTiledJSON("scene_ending_map", "{{site.baseurl}}/assets/maps/map_ending.json");
   },
   create: function() {
     const map = this.make.tilemap({
       key: "scene_ending_map"
     });
-    const tileset = map.addTilesetImage("map_projector_tileset", "scene_ending_tiles");
-
+    const tileset = map.addTilesetImage("map_projection_tileset", "scene_ending_tiles");
+    console.log(map, tileset);
     // Parameters: (Tiled layer name, tileset, x, y)
     const belowLayer = map.createStaticLayer("Below", tileset, 0, 0);
     const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
@@ -62,16 +63,20 @@ var scene_ending = new Phaser.Class({
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     camera.centerOn(352, 352);
 
-    speak(this, [
+    // Set up interact key
+    interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
+  },
+  update: function(time, delta){
+    if (!this.spoken){
+      this.spoken = true;
+      speak(this, [
       "...",
       "Please put the controller down."
-    ], function(){
-      setTimeout(function(){
+    ], function () {
+      setTimeout(function () {
         location.reload();
       }, 10000);
     });
-  },
-  update: function(time, detla){
-
+    }
   }
 });
