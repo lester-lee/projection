@@ -188,6 +188,22 @@ const gameInteractions = {
       })
   },
   /* Beach */
+  "Door--beach": function (scene) {
+    if ("Key" in inventory){
+      speak(scene, [
+        "The key fits.",
+        "You turn the knob and head inside."
+      ], function(){
+        fadeTransition(scene, 2000, "scene_ending");
+      });
+    }else {
+      speak(scene, ["The door is locked."]);
+    }
+  },
+  "Window--beach": function(scene) {
+    speak(scene, ["You try to look inside.",
+    "You can't really make anything out."]);
+  },
   "Person--beach": function (scene) {
     if ("Person--beach" in spokenTo) {
       speak(scene,
@@ -264,15 +280,25 @@ const gameInteractions = {
         });
       });
   },
+  "PalmTree": function(scene) {
+    speak(scene, ["It's a palm tree."]);
+  },
   /* Mountain */
   "Person--mountain": function (scene) {
-    speak(scene, ['Hey!', 'Nice to meet you.', 'It’s good to see another face around here.', 'Not many people hike up here in the winter.', 'The mountain is still.', 'It’s mighty cold, isn’t it?', 'I like it, though.', 'I try to come at least once a week, if not more often.', 'Depends on my schedule, but I try to make time.', 'Being up here makes me feel so alive.', 'The mountain is still.', 'Sometimes I like to bring my dog with me, but today she didn’t look like she wanted to trudge through the snow.', 'I don’t blame her.', 'I’m a little surprised you made it all the way up, what with the snowstorm that just blew by.', 'Me? I’m used to it.', 'A little snow can’t stop me.', 'The person smiles.', 'I guess it didn’t stop you, either.', 'The mountain is still.', 'I can’t remember the first time I hiked up here.', 'You would think that the first time coming up a mountain like this would be unforgettable, but here I am, having forgotten it.', 'That’s alright.', 'It just makes each time that much better.', 'You should come back in the fall, right when the leaves start changing.', 'It’s a beautiful sight. Makes me excited just thinking about it.', 'The person leans back and stretches their arms, their breath hanging in the air.', 'You want some hot chocolate?', 'X: Yes, Y: No'],
+    if ("Person--mountain" in spokenTo) {
+      speak(scene,
+        ["This person doesn't seem interested in talking anymore."]);
+      return;
+    }
+    aboveLayer.putTileAtWorldXY(42, 480, 416);
+    // Turn npc to face player
+    speak(scene, ['Hey!', 'Nice to meet you.', 'It’s good to see another face around here.', 'Not many people hike up here in the winter.', 'The mountain is still.', 'It’s mighty cold, isn’t it?', 'I like it, though.', 'I try to come at least once a week, if not more often.', 'Depends on my schedule, but I try to make time.', 'Being up here makes me feel so alive.', 'The mountain is still.', 'Sometimes I like to bring my dog with me, but today she didn’t look like she wanted to trudge through the snow.', 'I don’t blame her.', 'I’m a little surprised you made it all the way up, what with the snowstorm that just blew by.', 'Me? I’m used to it.', 'A little snow can’t stop me.', 'The person smiles.', 'I guess it didn’t stop you, either.', 'The mountain is still.', 'I can’t remember the first time I hiked up here.', 'You would think that the first time coming up a mountain like this would be unforgettable, but here I am, having forgotten it.', 'That’s alright.', 'The mountain is still.', 'It just makes each time that much better.', 'You should come back in the fall, right when the leaves start changing.', 'It’s a beautiful sight. Makes me excited just thinking about it.', 'The person leans back and stretches their arms, their breath hanging in the air.', 'You want some hot chocolate?', 'X: Yes, Y: No'],
     function() {
       waitForKeys(scene, {
         "X": function() {
           ageSpeech();
           renderSpeech();
-          speak(scene, ['Sweet!', 'Why don’t you head inside and make yourself comfortable?', 'I’ll be in right after you.', 'I just want to enjoy the view for a little longer.', 'The person falls silent.', 'The mountain is still.'],
+          speak(scene, ['Sweet!', 'Why don’t you go by the fire?', "I'll be right there.", 'I just want to enjoy the view for a little longer.', 'The person falls silent.', 'The mountain is still.'],
           function(){
             spokenTo["Person--mountain"] = true;
             inventory["Key"] = true;
@@ -290,6 +316,19 @@ const gameInteractions = {
         }
       })
     });
+  },
+  "Fire": function(scene) {
+    if ("Key" in inventory){
+      speak(scene, [
+        "You stare at the embers.",
+        "The flames flicker.",
+        "You feel dizzy."
+      ], function() {
+        fadeTransition(scene, 2000, "scene_ending");
+      });
+    }else {
+      speak(scene, ["It's warm by the fire."]);
+    }
   }
 };
 

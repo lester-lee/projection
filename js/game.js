@@ -129,7 +129,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
       // Create object for arrow keys
       cursors = this.input.keyboard.createCursorKeys();
 
-      // Debug graphics
+      /* Debug graphics 
       this.input.keyboard.once("keydown_D", event => {
         // Turn on physics debugging to show player's hitbox
         this.physics.world.createDebugGraphic();
@@ -145,7 +145,7 @@ function createScene(tileset_url, map_json, Tiledset_name, scene_name) {
           faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         });
       });
-
+      */
       // Set up interact key
       interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J);
       XKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
